@@ -5,9 +5,30 @@ using UnityEngine;
 public class GenerateBlocks : MonoBehaviour
 {
     public GameObject WallPrefab;
+    public GameObject WormPrefab;
+    public GameObject[] WormObjects = new GameObject[0];
+
+    public void SpawnWorm()
+    {
+        float wormCheckRadius        = 3f;
+        int maxSpawnAttemptsPerWorm  = 10;
+        int wormsToPlace             = 5;
+
+
+        for(int i = 0; i< wormsToPlace; i++)
+        {
+            Vector2 randomPosition = new Vector2(Random.Range(-5.0f, 5.0f), Random.Range(-5.0f, 5.0f));
+            //if (isValidPosition(randomPosition))
+            //{
+                Instantiate(WormPrefab, randomPosition, Quaternion.identity);
+            //}
+        }
+    }
+
     
+
     // Start is called before the first frame update
-    void Start()
+    public void StartGame()
     {
         // Start is called before the first frame update
         var screenHeight = 2f * Camera.main.orthographicSize;
@@ -42,6 +63,8 @@ public class GenerateBlocks : MonoBehaviour
             obj.isStatic = true;
             obj.transform.position = new Vector3(aspectRatio * orthoSize - 0.5f, -orthoSize + 0.5f + i, 0);
         }
+
+        SpawnWorm();
     }
 
     // Update is called once per frame
